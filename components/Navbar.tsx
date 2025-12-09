@@ -9,7 +9,7 @@ export default function Navbar() {
           {/* Small: logomark */}
           <div className="md:hidden">
             <Image
-              src="/logos/logo-new.png"
+              src="/logos/logo.png"
               alt="Mandados"
               width={70} // 140
               height={60} // 120

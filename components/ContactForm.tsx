@@ -1,79 +1,21 @@
 'use client';
-import { useState, FormEvent, useEffect, useRef } from 'react';
+import useContactForm from '@/lib/hooks/useContactForm';
 
 export default function ContactForm() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [statusMessage, setStatusMessage] = useState<string | null>(null);
-  const timeoutRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
-
-  function validateEmail(emailStr: string) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr);
-  }
-
-  const isValid = name.trim() !== '' && validateEmail(email) && message.trim() !== '';
-
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (!isValid) {
-      setStatus('error');
-      setStatusMessage('Por favor completá todos los campos correctamente.');
-      return;
-    }
-
-    setStatus('loading');
-    setStatusMessage(null);
-
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name.trim(), email: email.trim(), message: message.trim() }),
-      });
-
-      if (res.ok) {
-        setStatus('success');
-        setStatusMessage('Mensaje enviado. Te responderemos pronto.');
-        setName('');
-        setEmail('');
-        setMessage('');
-
-        // clear success after a short delay
-        if (timeoutRef.current) {
-          clearTimeout(timeoutRef.current);
-        }
-        timeoutRef.current = window.setTimeout(() => {
-          setStatus('idle');
-          setStatusMessage(null);
-          timeoutRef.current = null;
-        }, 6000);
-      } else {
-        let serverMsg = 'Ocurrió un error. Intentá nuevamente.';
-        try {
-          const json = await res.json();
-          if (json && json.error) serverMsg = String(json.error);
-        } catch (err){
-          console.error('Failed to parse JSON from server response:', err);
-        }
-        setStatus('error');
-        setStatusMessage(serverMsg);
-      }
-    } catch (error) {
-      console.error('Contact form submit error:', error);
-      setStatus('error');
-      setStatusMessage('Ocurrió un error de red. Intentá nuevamente.');
-    }
-  }
+  const {
+    name,
+    email,
+    message,
+    status,
+    statusMessage,
+    isValid,
+    onNameChange,
+    onEmailChange,
+    onMessageChange,
+    onFieldBlur,
+    getDisplayedError,
+    handleSubmit,
+  } = useContactForm();
 
   return (
     <div className="bg-white p-6 rounded-2xl shadow border">
@@ -86,10 +28,14 @@ export default function ContactForm() {
           <input
             id="contact-name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => onNameChange(e.target.value)}
+            onBlur={() => onFieldBlur('name')}
             required
-            className="w-full mt-1 p-3 rounded-xl border font-body focus:ring-2 focus:ring-primary focus:outline-none"
+            aria-invalid={!!getDisplayedError('name')}
+            aria-describedby={getDisplayedError('name') ? 'contact-name-error' : undefined}
+            className={`w-full mt-1 p-3 rounded-xl border font-body focus:ring-2 ${getDisplayedError('name') ? 'focus:ring-red-400' : 'focus:ring-primary'} focus:outline-none ${getDisplayedError('name') ? 'border-red-400' : ''}`}
           />
+          {getDisplayedError('name') && <div id="contact-name-error" className="text-sm text-red-600 mt-1">{getDisplayedError('name')}</div>}
         </div>
         <div>
           <label htmlFor="contact-email" className="text-sm font-body">Correo electrónico</label>
@@ -97,21 +43,29 @@ export default function ContactForm() {
             id="contact-email"
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => onEmailChange(e.target.value)}
+            onBlur={() => onFieldBlur('email')}
             required
-            className="w-full mt-1 p-3 rounded-xl border font-body focus:ring-2 focus:ring-primary focus:outline-none"
+            aria-invalid={!!getDisplayedError('email')}
+            aria-describedby={getDisplayedError('email') ? 'contact-email-error' : undefined}
+            className={`w-full mt-1 p-3 rounded-xl border font-body focus:ring-2 ${getDisplayedError('email') ? 'focus:ring-red-400' : 'focus:ring-primary'} focus:outline-none ${getDisplayedError('email') ? 'border-red-400' : ''}`}
           />
+          {getDisplayedError('email') && <div id="contact-email-error" className="text-sm text-red-600 mt-1">{getDisplayedError('email')}</div>}
         </div>
         <div>
           <label htmlFor="contact-message" className="text-sm font-body">Mensaje</label>
           <textarea
             id="contact-message"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => onMessageChange(e.target.value)}
+            onBlur={() => onFieldBlur('message')}
             rows={4}
             required
-            className="w-full mt-1 p-3 rounded-xl border font-body focus:ring-2 focus:ring-primary focus:outline-none"
+            aria-invalid={!!getDisplayedError('message')}
+            aria-describedby={getDisplayedError('message') ? 'contact-message-error' : undefined}
+            className={`w-full mt-1 p-3 rounded-xl border font-body focus:ring-2 ${getDisplayedError('message') ? 'focus:ring-red-400' : 'focus:ring-primary'} focus:outline-none ${getDisplayedError('message') ? 'border-red-400' : ''}`}
           />
+          {getDisplayedError('message') && <div id="contact-message-error" className="text-sm text-red-600 mt-1">{getDisplayedError('message')}</div>}
         </div>
 
         <div className="flex items-center gap-3">
@@ -126,6 +80,8 @@ export default function ContactForm() {
           <a href="https://wa.me/50687634630" className="px-4 py-3 rounded-2xl border border-secondary/30 text-secondary hover:bg-secondary/10 font-body">WhatsApp</a>
           <a href="tel:+50687634630" className="px-4 py-3 rounded-2xl border border-secondary/30 text-secondary hover:bg-secondary/10 font-body">Llamar</a>
         </div>
+
+        {/* No global summary: errors are shown per-field only (onBlur or after submit) */}
 
         <div aria-live="polite" role="status" className="min-h-[1.25rem]">
           {statusMessage && (

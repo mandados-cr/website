@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 
 export default function ContactForm() {
   const [name, setName] = useState('');
@@ -7,7 +7,7 @@ export default function ContactForm() {
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setStatus('loading');
     try {
@@ -54,8 +54,8 @@ export default function ContactForm() {
             {status === 'loading' ? 'Enviando...' : 'Enviar mensaje'}
           </button>
 
-          <a href="https://wa.me/50660000000" className="px-4 py-3 rounded-2xl border border-secondary/30 text-secondary hover:bg-secondary/10 font-body">WhatsApp</a>
-          <a href="tel:+50660000000" className="px-4 py-3 rounded-2xl border border-secondary/30 text-secondary hover:bg-secondary/10 font-body">Llamar</a>
+          <a href="https://wa.me/50687634630" className="px-4 py-3 rounded-2xl border border-secondary/30 text-secondary hover:bg-secondary/10 font-body">WhatsApp</a>
+          <a href="tel:+50687634630" className="px-4 py-3 rounded-2xl border border-secondary/30 text-secondary hover:bg-secondary/10 font-body">Llamar</a>
         </div>
 
         {status === 'success' && <div className="text-sm text-green-600 mt-2 font-body">Mensaje enviado. Te responderemos pronto.</div>}

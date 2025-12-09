@@ -33,7 +33,7 @@ export default function ContactForm() {
             required
             aria-invalid={!!getDisplayedError('name')}
             aria-describedby={getDisplayedError('name') ? 'contact-name-error' : undefined}
-            className={`w-full mt-1 p-3 rounded-xl border font-body focus:ring-2 focus:ring-primary focus:outline-none ${getDisplayedError('name') ? 'border-red-400' : ''}`}
+            className={`w-full mt-1 p-3 rounded-xl border font-body focus:ring-2 ${getDisplayedError('name') ? 'focus:ring-red-400' : 'focus:ring-primary'} focus:outline-none ${getDisplayedError('name') ? 'border-red-400' : ''}`}
           />
           {getDisplayedError('name') && <div id="contact-name-error" className="text-sm text-red-600 mt-1">{getDisplayedError('name')}</div>}
         </div>
@@ -48,7 +48,7 @@ export default function ContactForm() {
             required
             aria-invalid={!!getDisplayedError('email')}
             aria-describedby={getDisplayedError('email') ? 'contact-email-error' : undefined}
-            className={`w-full mt-1 p-3 rounded-xl border font-body focus:ring-2 focus:ring-primary focus:outline-none ${getDisplayedError('email') ? 'border-red-400' : ''}`}
+            className={`w-full mt-1 p-3 rounded-xl border font-body focus:ring-2 ${getDisplayedError('email') ? 'focus:ring-red-400' : 'focus:ring-primary'} focus:outline-none ${getDisplayedError('email') ? 'border-red-400' : ''}`}
           />
           {getDisplayedError('email') && <div id="contact-email-error" className="text-sm text-red-600 mt-1">{getDisplayedError('email')}</div>}
         </div>
@@ -63,7 +63,7 @@ export default function ContactForm() {
             required
             aria-invalid={!!getDisplayedError('message')}
             aria-describedby={getDisplayedError('message') ? 'contact-message-error' : undefined}
-            className={`w-full mt-1 p-3 rounded-xl border font-body focus:ring-2 focus:ring-primary focus:outline-none ${getDisplayedError('message') ? 'border-red-400' : ''}`}
+            className={`w-full mt-1 p-3 rounded-xl border font-body focus:ring-2 ${getDisplayedError('message') ? 'focus:ring-red-400' : 'focus:ring-primary'} focus:outline-none ${getDisplayedError('message') ? 'border-red-400' : ''}`}
           />
           {getDisplayedError('message') && <div id="contact-message-error" className="text-sm text-red-600 mt-1">{getDisplayedError('message')}</div>}
         </div>

@@ -18,3 +18,8 @@ export function escapeHtmlAndConvertNewlines(input: unknown): string {
   const escaped = escapeHtml(input);
   return newLinesToLineBreaks(escaped);
 }
+
+// Simple email validation
+export function validateEmail(emailStr: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr);
+}

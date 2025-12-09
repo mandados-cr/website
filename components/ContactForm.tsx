@@ -1,5 +1,6 @@
 'use client';
 import { useState, FormEvent, useEffect, useRef } from 'react';
+import {validateEmail} from "@/lib/strings";
 
 export default function ContactForm() {
   const [name, setName] = useState('');
@@ -16,10 +17,6 @@ export default function ContactForm() {
       }
     };
   }, []);
-
-  function validateEmail(emailStr: string) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr);
-  }
 
   const isValid = name.trim() !== '' && validateEmail(email) && message.trim() !== '';
 

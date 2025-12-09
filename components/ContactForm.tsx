@@ -54,8 +54,8 @@ export default function ContactForm() {
             {status === 'loading' ? 'Enviando...' : 'Enviar mensaje'}
           </button>
 
-          <a href="https://wa.me/50660000000" className="px-4 py-3 rounded-2xl border text-gray-800 font-body">WhatsApp</a>
-          <a href="tel:+50660000000" className="px-4 py-3 rounded-2xl border text-gray-800 font-body">Llamar</a>
+          <a href="https://wa.me/50660000000" className="px-4 py-3 rounded-2xl border border-secondary/30 text-secondary hover:bg-secondary/10 font-body">WhatsApp</a>
+          <a href="tel:+50660000000" className="px-4 py-3 rounded-2xl border border-secondary/30 text-secondary hover:bg-secondary/10 font-body">Llamar</a>
         </div>
 
         {status === 'success' && <div className="text-sm text-green-600 mt-2 font-body">Mensaje enviado. Te responderemos pronto.</div>}

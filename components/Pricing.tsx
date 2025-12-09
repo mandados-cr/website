@@ -2,7 +2,8 @@ export default function Pricing() {
   return (
     <div className="bg-white rounded-2xl p-6 shadow-sm border">
       <h3 className="text-2xl sm:text-3xl font-bold font-display">Precios simples y transparentes</h3>
-      <p className="text-gray-600 mt-2 font-body">Tarifas claras según distancia y complejidad. Sin sorpresas.</p>
+      <div className="h-1 w-16 bg-secondary rounded-full mt-2" />
+      <p className="text-gray-600 mt-3 font-body">Tarifas claras según distancia y complejidad. Sin sorpresas.</p>
 
       <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="p-6 rounded-xl border hover:shadow-md transition-shadow">
@@ -11,8 +12,9 @@ export default function Pricing() {
           <div className="text-xs text-gray-500 mt-2 font-body">Varía según distancia y complejidad.</div>
         </div>
 
-        <div className="p-6 rounded-xl border hover:shadow-md transition-shadow">
-          <div className="font-semibold font-body">Servicios diarios</div>
+        <div className="p-6 rounded-xl border border-secondary/40 ring-1 ring-secondary/10 hover:shadow-md transition-shadow relative">
+          <span className="absolute -top-3 left-4 px-2 py-0.5 rounded-full bg-secondary text-white text-xs font-rounded">Más popular</span>
+          <div className="font-semibold font-body text-secondary">Servicios diarios</div>
           <div className="text-sm text-gray-700 mt-2 font-body">₡15,000 — ₡35,000 / día</div>
           <div className="text-xs text-gray-500 mt-2 font-body">Para cliente con necesidades de personal dedicado.</div>
         </div>

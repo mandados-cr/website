@@ -5,6 +5,7 @@ export default function Hero() {
   return (
     <section className="max-w-6xl mx-auto px-6 py-20 flex flex-col-reverse md:flex-row items-center gap-12">
       <div className="w-full md:w-1/2">
+        <span className="inline-block px-3 py-1 rounded-full bg-secondary/10 text-secondary text-xs font-rounded font-semibold mb-3">Nuevo • Servicio ágil</span>
         <h1 className="text-3xl sm:text-5xl font-extrabold leading-tight font-display">
           Entregas y mandados ultra-rápidos en toda Costa Rica
         </h1>
@@ -22,7 +23,7 @@ export default function Hero() {
           </Link>
           <Link
             href="/#precios"
-            className="inline-flex items-center px-6 py-3 rounded-2xl border border-gray-200 text-gray-800 font-body"
+            className="inline-flex items-center px-6 py-3 rounded-2xl border border-secondary/30 text-secondary hover:bg-secondary/10 font-body"
           >
             Ver precios
           </Link>
@@ -46,9 +47,9 @@ export default function Hero() {
       </div>
 
       <div className="w-full md:w-1/2 flex justify-center">
-        <div className="w-80 h-80 rounded-3xl bg-gradient-to-br from-primary/10 to-white flex items-center justify-center shadow-lg">
+        <div className="w-80 h-80 rounded-3xl bg-secondary flex items-center justify-center shadow-lg">
           <Image
-            src="/logos/stacked-with-tagline.png"
+            src="/logos/stacked-with-tagline-white.png"
             alt="Mandados"
             width={380}
             height={380}

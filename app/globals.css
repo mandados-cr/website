@@ -27,8 +27,11 @@
 
 /* Custom utilities for brand fonts and shadows */
 @layer utilities {
-  .font-display { font-family: var(--font-display); }
-  .font-rounded { font-family: var(--font-rounded); }
-  .font-body { font-family: var(--font-body); }
+  .font-display {
+    font-family: var(--font-display), serif; }
+  .font-rounded {
+    font-family: var(--font-rounded), serif; }
+  .font-body {
+    font-family: var(--font-body), serif; }
   .shadow-soft { box-shadow: var(--shadow-soft); }
 }

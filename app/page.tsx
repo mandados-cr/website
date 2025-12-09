@@ -23,7 +23,7 @@ export default function Page() {
           <ContactForm />
         </section>
       </main>
-      <footer className="border-t py-8 text-center text-sm text-gray-600">
+      <footer className="border-t border-graphite/10 py-8 text-center text-sm text-gray-600">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Image src="/logos/horizontal-with-tagline.png" alt="Mandados" width={190} height={46} style={{width: "285px", height: "69px"}} loading="lazy"/>

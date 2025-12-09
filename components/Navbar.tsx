@@ -32,19 +32,19 @@ export default function Navbar() {
         <nav className="hidden md:flex items-center gap-8">
           <Link
             href="/#servicios"
-            className="text-gray-700 hover:text-graphite font-body"
+            className="text-gray-700 hover:text-secondary font-body"
           >
             Servicios
           </Link>
           <Link
             href="/#precios"
-            className="text-gray-700 hover:text-graphite font-body"
+            className="text-gray-700 hover:text-secondary font-body"
           >
             Precios
           </Link>
           <Link
             href="/#contacto"
-            className="text-gray-700 hover:text-graphite font-body"
+            className="text-gray-700 hover:text-secondary font-body"
           >
             Contacto
           </Link>

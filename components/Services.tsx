@@ -17,7 +17,8 @@ export default function Services() {
   return (
     <div>
       <h2 className="text-2xl sm:text-3xl font-bold font-display">Servicios</h2>
-      <p className="text-gray-600 mt-2 max-w-2xl font-body">Soluciones personalizadas para personas, empresas y eventos. Rápido, confiable y con seguimiento.</p>
+      <div className="h-1 w-16 bg-secondary rounded-full mt-2" />
+      <p className="text-gray-600 mt-3 max-w-2xl font-body">Soluciones personalizadas para personas, empresas y eventos. Rápido, confiable y con seguimiento.</p>
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-6">
         {items.map((s) => (
           <div key={s.title} className="p-6 rounded-2xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow">

@@ -11,16 +11,20 @@ export default function Page() {
       <Navbar />
       <main className="flex-1">
         <Hero />
-        <section id="servicios" className="max-w-6xl mx-auto py-16 px-6">
-          <Services />
+        <section id="servicios" className="bg-secondary/10 py-16">
+          <div className="max-w-6xl mx-auto px-6">
+            <Services />
+          </div>
         </section>
-        <section id="precios" className="bg-gray-50 py-16">
+        <section id="precios" className="bg-graphite/100 py-16">
           <div className="max-w-4xl mx-auto px-6">
             <Pricing />
           </div>
         </section>
-        <section id="contacto" className="max-w-3xl mx-auto py-16 px-6">
-          <ContactForm />
+        <section id="contacto" className="bg-secondary/10 py-16">
+          <div className="max-w-3xl mx-auto px-6">
+            <ContactForm />
+          </div>
         </section>
       </main>
       <footer className="border-t border-graphite/10 py-8 text-center text-sm text-gray-600">

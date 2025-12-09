@@ -21,7 +21,7 @@ export default function Services() {
       <p className="text-gray-600 mt-3 max-w-2xl font-body">Soluciones personalizadas para personas, empresas y eventos. Rápido, confiable y con seguimiento.</p>
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-6">
         {items.map((s) => (
-          <div key={s.title} className="p-6 rounded-2xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+          <div key={s.title} className="bg-white p-6 rounded-2xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
             <div className="text-lg font-semibold font-body">{s.title}</div>
             <ul className="mt-3 text-sm text-gray-700 space-y-2 font-body">
               {s.bullets.map((b) => (

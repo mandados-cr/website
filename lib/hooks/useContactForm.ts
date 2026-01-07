@@ -7,6 +7,7 @@ export type ContactHook = {
   email: string;
   phone: string;
   message: string;
+  honeypot: string;
   status: 'idle' | 'loading' | 'success' | 'error';
   statusMessage: string | null;
   errors: Record<string, string>;
@@ -15,6 +16,7 @@ export type ContactHook = {
   onEmailChange: (v: string) => void;
   onPhoneChange: (v: string | undefined) => void;
   onMessageChange: (v: string) => void;
+  onHoneypotChange: (v: string) => void;
   onFieldBlur: (field: string) => void;
   getDisplayedError: (field: string) => string | undefined;
   handleSubmit: (e?: FormEvent) => Promise<void>;
@@ -40,6 +42,7 @@ export default function useContactForm(): ContactHook {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
+  const [honeypot, setHoneypot] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -87,6 +90,9 @@ export default function useContactForm(): ContactHook {
     setMessage(v);
     clearFieldError('message');
   }
+  function onHoneypotChange(v: string) {
+    setHoneypot(v);
+  }
 
   function mapClientValidation() {
     if (!clientValidation.valid) {
@@ -117,6 +123,14 @@ export default function useContactForm(): ContactHook {
   async function handleSubmit(e?: FormEvent) {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
     setAttemptedSubmit(true);
+
+    // Honeypot check - if filled, likely spam
+    if (honeypot.trim() !== '') {
+      setStatus('success');
+      setStatusMessage('Mensaje enviado. Te responderemos pronto.');
+      return; // Silently reject spam
+    }
+
     if (!mapClientValidation()) {
       setStatus('error');
       setStatusMessage('Corrige los errores en el formulario.');
@@ -131,7 +145,7 @@ export default function useContactForm(): ContactHook {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim(), message: message.trim() }),
+        body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim(), message: message.trim(), honeypot: honeypot.trim() }),
       });
 
       const json: unknown = await res.json().catch(() => null);
@@ -143,6 +157,7 @@ export default function useContactForm(): ContactHook {
         setEmail('');
         setPhone('');
         setMessage('');
+        setHoneypot('');
         setErrors({});
         setAttemptedSubmit(false);
         setTouched({});
@@ -179,6 +194,7 @@ export default function useContactForm(): ContactHook {
     setEmail('');
     setPhone('');
     setMessage('');
+    setHoneypot('');
     setStatus('idle');
     setStatusMessage(null);
     setErrors({});
@@ -192,6 +208,7 @@ export default function useContactForm(): ContactHook {
     email,
     phone,
     message,
+    honeypot,
     status,
     statusMessage,
     errors,
@@ -200,6 +217,7 @@ export default function useContactForm(): ContactHook {
     onEmailChange,
     onPhoneChange,
     onMessageChange,
+    onHoneypotChange,
     onFieldBlur,
     getDisplayedError,
     handleSubmit,

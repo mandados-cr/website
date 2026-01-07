@@ -17,6 +17,12 @@ export async function POST(req: Request) {
 
   try {
     const data = await req.json();
+
+    // Honeypot check - if filled, likely spam
+    if (data.honeypot && String(data.honeypot).trim() !== '') {
+      return NextResponse.json({ success: true }, { status: 200 }); // Silently reject spam
+    }
+
     const validated = validatePayload(data);
 
     if (!validated.success) {

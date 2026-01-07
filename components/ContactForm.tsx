@@ -9,6 +9,7 @@ export default function ContactForm() {
     email,
     phone,
     message,
+    honeypot,
     status,
     statusMessage,
     isValid,
@@ -16,6 +17,7 @@ export default function ContactForm() {
     onEmailChange,
     onPhoneChange,
     onMessageChange,
+    onHoneypotChange,
     onFieldBlur,
     getDisplayedError,
     handleSubmit,
@@ -27,6 +29,19 @@ export default function ContactForm() {
       <p className="text-gray-600 mt-1 font-body">Escribinos para solicitar un servicio o cotización personalizada.</p>
 
       <form onSubmit={handleSubmit} className="mt-4 space-y-3" noValidate>
+        {/* Honeypot field - hidden from users, catches bots */}
+        <div className="hidden" aria-hidden="true">
+          <label htmlFor="website">Website</label>
+          <input
+            id="website"
+            name="website"
+            type="text"
+            value={honeypot}
+            onChange={(e) => onHoneypotChange(e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
         <div>
           <label htmlFor="contact-name" className="text-sm font-body">Nombre</label>
           <input

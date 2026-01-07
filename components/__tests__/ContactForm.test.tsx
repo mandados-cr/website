@@ -193,6 +193,7 @@ describe('ContactForm', () => {
 
   it('should show error message on API failure', async () => {
     const user = userEvent.setup();
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     vi.mocked(global.fetch).mockRejectedValueOnce(new Error('Network error'));
 
     render(<ContactForm />);
@@ -208,6 +209,8 @@ describe('ContactForm', () => {
     await waitFor(() => {
       expect(screen.getByText(/error de red/i)).toBeInTheDocument();
     });
+
+    consoleErrorSpy.mockRestore();
   });
 
   it('should show loading state during submission', async () => {

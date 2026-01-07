@@ -23,16 +23,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'validation', fieldErrors: validated.fieldErrors }, { status: 400 });
     }
 
-    const { name, email, message } = validated.data;
+    const { name, email, phone, message } = validated.data;
 
     const safeName = escapeHtml(name);
     const safeEmail = escapeHtml(email);
+    const safePhone = escapeHtml(phone);
     const safeMessage = escapeHtmlAndConvertNewlines(message);
 
     const html = `
       <h2>Contacto desde el sitio</h2>
       <p><strong>Nombre:</strong> ${safeName}</p>
       <p><strong>Email:</strong> ${safeEmail}</p>
+      <p><strong>Teléfono:</strong> ${safePhone}</p>
       <p><strong>Mensaje:</strong></p>
       <p>${safeMessage}</p>
     `;

@@ -1,16 +1,20 @@
 'use client';
 import useContactForm from '@/lib/hooks/useContactForm';
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
 
 export default function ContactForm() {
   const {
     name,
     email,
+    phone,
     message,
     status,
     statusMessage,
     isValid,
     onNameChange,
     onEmailChange,
+    onPhoneChange,
     onMessageChange,
     onFieldBlur,
     getDisplayedError,
@@ -51,6 +55,21 @@ export default function ContactForm() {
             className={`w-full mt-1 p-3 rounded-xl border font-body focus:ring-2 ${getDisplayedError('email') ? 'focus:ring-red-400' : 'focus:ring-primary'} focus:outline-none ${getDisplayedError('email') ? 'border-red-400' : ''}`}
           />
           {getDisplayedError('email') && <div id="contact-email-error" className="text-sm text-red-600 mt-1">{getDisplayedError('email')}</div>}
+        </div>
+        <div>
+          <label htmlFor="contact-phone" className="text-sm font-body">Teléfono</label>
+          <PhoneInput
+            id="contact-phone"
+            international
+            defaultCountry="CR"
+            value={phone}
+            onChange={onPhoneChange}
+            onBlur={() => onFieldBlur('phone')}
+            className={`phone-input-wrapper mt-1 ${getDisplayedError('phone') ? 'phone-input-error' : ''}`}
+            aria-invalid={!!getDisplayedError('phone')}
+            aria-describedby={getDisplayedError('phone') ? 'contact-phone-error' : undefined}
+          />
+          {getDisplayedError('phone') && <div id="contact-phone-error" className="text-sm text-red-600 mt-1">{getDisplayedError('phone')}</div>}
         </div>
         <div>
           <label htmlFor="contact-message" className="text-sm font-body">Mensaje</label>

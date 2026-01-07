@@ -5,6 +5,7 @@ import { contactSchema } from '@/lib/schemas/contact';
 export type ContactHook = {
   name: string;
   email: string;
+  phone: string;
   message: string;
   status: 'idle' | 'loading' | 'success' | 'error';
   statusMessage: string | null;
@@ -12,6 +13,7 @@ export type ContactHook = {
   isValid: boolean;
   onNameChange: (v: string) => void;
   onEmailChange: (v: string) => void;
+  onPhoneChange: (v: string | undefined) => void;
   onMessageChange: (v: string) => void;
   onFieldBlur: (field: string) => void;
   getDisplayedError: (field: string) => string | undefined;
@@ -36,6 +38,7 @@ function hasMessage(obj: unknown): obj is ApiMessage {
 export default function useContactForm(): ContactHook {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
@@ -46,7 +49,7 @@ export default function useContactForm(): ContactHook {
 
   // Compute client-side validation once per render
   const clientValidation = useMemo(() => {
-    const trimmed = { name: name.trim(), email: email.trim(), message: message.trim() };
+    const trimmed = { name: name.trim(), email: email.trim(), phone: phone.trim(), message: message.trim() };
     const res = contactSchema.safeParse(trimmed);
     if (res.success) return { valid: true, fieldErrors: {} as Record<string, string> };
     const fieldErrors: Record<string, string> = {};
@@ -55,7 +58,7 @@ export default function useContactForm(): ContactHook {
       if (typeof key === 'string') fieldErrors[key] = issue.message;
     }
     return { valid: false, fieldErrors };
-  }, [name, email, message]);
+  }, [name, email, phone, message]);
 
   const isValid = clientValidation.valid;
 
@@ -75,6 +78,10 @@ export default function useContactForm(): ContactHook {
   function onEmailChange(v: string) {
     setEmail(v);
     clearFieldError('email');
+  }
+  function onPhoneChange(v: string | undefined) {
+    setPhone(v || '');
+    clearFieldError('phone');
   }
   function onMessageChange(v: string) {
     setMessage(v);
@@ -124,7 +131,7 @@ export default function useContactForm(): ContactHook {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name.trim(), email: email.trim(), message: message.trim() }),
+        body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim(), message: message.trim() }),
       });
 
       const json: unknown = await res.json().catch(() => null);
@@ -134,6 +141,7 @@ export default function useContactForm(): ContactHook {
         setStatusMessage('Mensaje enviado. Te responderemos pronto.');
         setName('');
         setEmail('');
+        setPhone('');
         setMessage('');
         setErrors({});
         setAttemptedSubmit(false);
@@ -169,6 +177,7 @@ export default function useContactForm(): ContactHook {
   function reset() {
     setName('');
     setEmail('');
+    setPhone('');
     setMessage('');
     setStatus('idle');
     setStatusMessage(null);
@@ -181,6 +190,7 @@ export default function useContactForm(): ContactHook {
   return {
     name,
     email,
+    phone,
     message,
     status,
     statusMessage,
@@ -188,6 +198,7 @@ export default function useContactForm(): ContactHook {
     isValid,
     onNameChange,
     onEmailChange,
+    onPhoneChange,
     onMessageChange,
     onFieldBlur,
     getDisplayedError,

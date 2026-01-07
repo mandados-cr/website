@@ -9,9 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "libphonenumber-js": "^1.12.33",
     "next": "16.0.8",
     "react": "19.2.1",
     "react-dom": "19.2.1",
+    "react-phone-number-input": "^3.4.14",
     "resend": "^6.6.0",
     "zod": "^4.1.13"
   },

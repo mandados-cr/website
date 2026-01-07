@@ -17,22 +17,30 @@ export async function POST(req: Request) {
 
   try {
     const data = await req.json();
+
+    // Honeypot check - if filled, likely spam
+    if (data.honeypot && String(data.honeypot).trim() !== '') {
+      return NextResponse.json({ success: true }, { status: 200 }); // Silently reject spam
+    }
+
     const validated = validatePayload(data);
 
     if (!validated.success) {
       return NextResponse.json({ error: 'validation', fieldErrors: validated.fieldErrors }, { status: 400 });
     }
 
-    const { name, email, message } = validated.data;
+    const { name, email, phone, message } = validated.data;
 
     const safeName = escapeHtml(name);
     const safeEmail = escapeHtml(email);
+    const safePhone = escapeHtml(phone);
     const safeMessage = escapeHtmlAndConvertNewlines(message);
 
     const html = `
       <h2>Contacto desde el sitio</h2>
       <p><strong>Nombre:</strong> ${safeName}</p>
       <p><strong>Email:</strong> ${safeEmail}</p>
+      <p><strong>Teléfono:</strong> ${safePhone}</p>
       <p><strong>Mensaje:</strong></p>
       <p>${safeMessage}</p>
     `;

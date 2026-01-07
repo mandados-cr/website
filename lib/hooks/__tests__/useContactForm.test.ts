@@ -1,10 +1,11 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
+import { vi } from 'vitest';
 import useContactForm from '../useContactForm';
 
 describe('useContactForm', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    (global.fetch as jest.Mock).mockClear();
+    vi.clearAllMocks();
+    vi.mocked(global.fetch).mockClear();
   });
 
   it('should initialize with empty values', () => {
@@ -141,7 +142,7 @@ describe('useContactForm', () => {
   });
 
   it('should submit form successfully when valid', async () => {
-    (global.fetch as jest.Mock).mockResolvedValueOnce({
+    vi.mocked(global.fetch).mockResolvedValueOnce({
       ok: true,
       json: async () => ({ success: true }),
     });
@@ -178,7 +179,7 @@ describe('useContactForm', () => {
   });
 
   it('should handle API validation errors', async () => {
-    (global.fetch as jest.Mock).mockResolvedValueOnce({
+    vi.mocked(global.fetch).mockResolvedValueOnce({
       ok: false,
       json: async () => ({
         error: 'validation',

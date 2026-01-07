@@ -1,10 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 import ContactForm from '../ContactForm';
 
 // Mock the phone input component to avoid issues with country flags
-jest.mock('react-phone-number-input', () => {
-  return function PhoneInput({ value, onChange, onBlur, id }: any) {
+vi.mock('react-phone-number-input', () => ({
+  default: function PhoneInput({ value, onChange, onBlur, id }: any) {
     return (
       <input
         id={id}
@@ -15,13 +16,13 @@ jest.mock('react-phone-number-input', () => {
         data-testid="phone-input"
       />
     );
-  };
-});
+  },
+}));
 
 describe('ContactForm', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    (global.fetch as jest.Mock).mockClear();
+    vi.clearAllMocks();
+    vi.mocked(global.fetch).mockClear();
   });
 
   it('should render all form fields', () => {
@@ -115,7 +116,7 @@ describe('ContactForm', () => {
 
   it('should submit form successfully', async () => {
     const user = userEvent.setup();
-    (global.fetch as jest.Mock).mockResolvedValueOnce({
+    vi.mocked(global.fetch).mockResolvedValueOnce({
       ok: true,
       json: async () => ({ success: true }),
     });
@@ -139,7 +140,7 @@ describe('ContactForm', () => {
 
   it('should clear form after successful submission', async () => {
     const user = userEvent.setup();
-    (global.fetch as jest.Mock).mockResolvedValueOnce({
+    vi.mocked(global.fetch).mockResolvedValueOnce({
       ok: true,
       json: async () => ({ success: true }),
     });
@@ -192,7 +193,7 @@ describe('ContactForm', () => {
 
   it('should show error message on API failure', async () => {
     const user = userEvent.setup();
-    (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
+    vi.mocked(global.fetch).mockRejectedValueOnce(new Error('Network error'));
 
     render(<ContactForm />);
 
@@ -211,7 +212,7 @@ describe('ContactForm', () => {
 
   it('should show loading state during submission', async () => {
     const user = userEvent.setup();
-    (global.fetch as jest.Mock).mockImplementationOnce(
+    vi.mocked(global.fetch).mockImplementationOnce(
       () => new Promise((resolve) => setTimeout(() => resolve({ ok: true, json: async () => ({}) }), 100))
     );
 

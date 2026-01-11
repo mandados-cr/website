@@ -56,3 +56,9 @@
 .phone-input-wrapper .PhoneInputCountryIcon {
   @apply w-6 h-6;
 }
+
+.phone-input-wrapper .PhoneInputCountryIcon--border {
+  @apply shadow-none bg-transparent;
+  box-shadow: none;
+  background-color: transparent;
+}

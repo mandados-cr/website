@@ -1,17 +1,20 @@
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 export default function Hero() {
+  const t = useTranslations("hero");
   return (
     <section className="max-w-6xl mx-auto px-6 py-20 flex flex-col md:flex-row items-center gap-12">
       <div className="w-full md:w-1/2">
-        <span className="inline-block px-3 py-1 rounded-full bg-secondary/10 text-secondary text-xs font-rounded font-semibold mb-3">Nuevo • Servicio ágil</span>
+        <span className="inline-block px-3 py-1 rounded-full bg-secondary/10 text-secondary text-xs font-rounded font-semibold mb-3">
+          {t("badge")}
+        </span>
         <h1 className="text-3xl sm:text-5xl font-extrabold leading-tight font-display">
-          Entregas y mandados ultra-rápidos en toda Costa Rica
+          {t("title")}
         </h1>
         <p className="mt-4 text-gray-700 text-lg font-body max-w-xl">
-          Mandados gestiona compras, entregas y trámites con personal confiable y
-          atención personalizada. Pedí ahora y recibí actualizaciones claras en cada paso.
+          {t("description")}
         </p>
 
         <div className="mt-8 flex flex-wrap gap-4">
@@ -19,13 +22,13 @@ export default function Hero() {
             href="/#contacto"
             className="inline-flex items-center px-6 py-3 rounded-2xl bg-primary text-white font-rounded font-semibold shadow-soft"
           >
-            Pedir ahora
+            {t("orderNow")}
           </Link>
           <Link
             href="/#precios"
             className="inline-flex items-center px-6 py-3 rounded-2xl border border-secondary/30 text-secondary hover:bg-secondary/10 font-body"
           >
-            Ver precios
+            {t("viewPricing")}
           </Link>
         </div>
 
@@ -35,11 +38,11 @@ export default function Hero() {
               M
             </div>
             <div className="flex-1">
-              <div className="text-sm font-semibold font-body">Pedido: Compras rápidas</div>
-              <div className="text-xs text-gray-500 mt-1 font-body">Recogida: Supermercado La Central • Entrega: Oficina en Escazú</div>
+              <div className="text-sm font-semibold font-body">{t("cardTitle")}</div>
+              <div className="text-xs text-gray-500 mt-1 font-body">{t("cardSubtitle")}</div>
               <div className="mt-3 flex items-center justify-between">
-                <div className="text-sm font-medium font-body">Tiempo estimado</div>
-                <div className="text-sm font-semibold font-body">45 min</div>
+                <div className="text-sm font-medium font-body">{t("cardEtaLabel")}</div>
+                <div className="text-sm font-semibold font-body">{t("cardEtaValue")}</div>
               </div>
             </div>
           </div>
@@ -50,7 +53,7 @@ export default function Hero() {
         <div className="w-80 h-80 rounded-3xl bg-secondary flex items-center justify-center shadow-lg">
           <Image
             src="/logos/stacked-with-tagline-white.png"
-            alt="Mandados"
+            alt={t("imageAlt")}
             width={380}
             height={380}
             loading="eager"

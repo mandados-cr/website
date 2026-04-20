@@ -1,0 +1,112 @@
+{
+  "metadata": {
+    "title": "Mandados — We make it happen",
+    "description": "Mandados: fast, reliable and personalized deliveries and errands across Costa Rica. Order now — easy and transparent.",
+    "ogDescription": "Mandados: fast, reliable and personalized deliveries and errands across Costa Rica."
+  },
+  "navbar": {
+    "services": "Services",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "orderNow": "Order now",
+    "order": "Order",
+    "logoAlt": "Mandados",
+    "logoAltTagline": "Mandados — We make it happen",
+    "languageLabel": "Language"
+  },
+  "hero": {
+    "badge": "New • Fast service",
+    "title": "Ultra-fast deliveries and errands across Costa Rica",
+    "description": "Mandados handles shopping, deliveries and errands with trusted staff and personal attention. Order now and get clear updates at every step.",
+    "orderNow": "Order now",
+    "viewPricing": "See pricing",
+    "cardTitle": "Order: Quick shopping",
+    "cardSubtitle": "Pickup: La Central supermarket • Drop-off: Office in Escazú",
+    "cardEtaLabel": "Estimated time",
+    "cardEtaValue": "45 min",
+    "imageAlt": "Mandados"
+  },
+  "services": {
+    "title": "Services",
+    "subtitle": "Tailored solutions for individuals, businesses and events. Fast, reliable and fully tracked.",
+    "items": {
+      "shopping": {
+        "title": "Shopping",
+        "bullets": [
+          "Supermarkets and stores",
+          "Pickup and home delivery",
+          "Receipts and change handling"
+        ]
+      },
+      "errands": {
+        "title": "Errands",
+        "bullets": [
+          "Document handling",
+          "Payments and pickups",
+          "Support for companies and hotels"
+        ]
+      },
+      "deliveries": {
+        "title": "Deliveries",
+        "bullets": [
+          "Local courier",
+          "Packages and events",
+          "Coordination for mid-volume loads"
+        ]
+      }
+    }
+  },
+  "pricing": {
+    "title": "Simple, transparent pricing",
+    "subtitle": "Clear rates based on distance and complexity. No surprises.",
+    "mostPopular": "Most popular",
+    "plans": {
+      "errands": {
+        "title": "Errands and deliveries",
+        "price": "₡1,500 — ₡12,500",
+        "note": "Varies with distance and complexity."
+      },
+      "daily": {
+        "title": "Daily service",
+        "price": "₡15,000 — ₡35,000 / day",
+        "note": "For clients who need dedicated staff."
+      },
+      "shoppingBilling": {
+        "title": "Shopping and billing",
+        "price": "Price based on distance",
+        "note": "If Mandados does the shopping: weekly invoice (Fridays), 2% on shopping total + 13% VAT on the commission."
+      }
+    },
+    "billingNote": "<strong>Billing:</strong> weekly credit with invoice every Friday. <strong>Payment:</strong> bank transfer."
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Write to us to request a service or a custom quote.",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message"
+    },
+    "submit": "Send message",
+    "submitLoading": "Sending...",
+    "whatsapp": "WhatsApp",
+    "success": "Message sent. We'll get back to you soon.",
+    "fixErrors": "Please fix the errors in the form.",
+    "genericError": "Something went wrong. Please try again.",
+    "networkError": "Network error. Please try again.",
+    "errors": {
+      "name_required": "Name is required",
+      "name_too_long": "Name is too long",
+      "email_invalid": "Invalid email",
+      "phone_required": "Phone is required",
+      "phone_invalid": "Invalid phone number",
+      "message_required": "Message is required",
+      "message_too_long": "Message is too long"
+    }
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "logoAlt": "Mandados"
+  }
+}

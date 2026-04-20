@@ -2,16 +2,19 @@ import { z } from 'zod';
 import { isPossiblePhoneNumber } from 'libphonenumber-js';
 
 export const contactSchema = z.object({
-  name: z.string().min(1, 'Nombre es requerido').max(100, 'Nombre demasiado largo'),
-  email: z.email('Correo inválido'),
+  name: z
+    .string()
+    .min(1, 'name_required')
+    .max(100, 'name_too_long'),
+  email: z.email('email_invalid'),
   phone: z
     .string()
-    .min(1, 'Teléfono es requerido')
-    .refine(
-      (val) => isPossiblePhoneNumber(val),
-      'Número de teléfono inválido'
-    ),
-  message: z.string().min(1, 'Mensaje requerido').max(2000, 'Mensaje demasiado largo'),
+    .min(1, 'phone_required')
+    .refine((val) => isPossiblePhoneNumber(val), 'phone_invalid'),
+  message: z
+    .string()
+    .min(1, 'message_required')
+    .max(2000, 'message_too_long'),
 });
 
 export type Contact = z.infer<typeof contactSchema>;

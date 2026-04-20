@@ -2,8 +2,8 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import ContactForm from '../ContactForm';
+import { IntlWrapper } from '@/lib/testing/intlWrapper';
 
-// Mock the phone input component to avoid issues with country flags
 vi.mock('react-phone-number-input', () => ({
   default: function PhoneInput({ value, onChange, onBlur, id }: any) {
     return (
@@ -19,6 +19,14 @@ vi.mock('react-phone-number-input', () => ({
   },
 }));
 
+function renderForm() {
+  return render(
+    <IntlWrapper>
+      <ContactForm />
+    </IntlWrapper>
+  );
+}
+
 describe('ContactForm', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -26,7 +34,7 @@ describe('ContactForm', () => {
   });
 
   it('should render all form fields', () => {
-    render(<ContactForm />);
+    renderForm();
 
     expect(screen.getByLabelText(/nombre/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/correo electrónico/i)).toBeInTheDocument();
@@ -36,7 +44,7 @@ describe('ContactForm', () => {
   });
 
   it('should render honeypot field as hidden', () => {
-    render(<ContactForm />);
+    renderForm();
 
     const honeypotField = screen.getByLabelText(/website/i);
     expect(honeypotField).toBeInTheDocument();
@@ -45,7 +53,7 @@ describe('ContactForm', () => {
 
   it('should allow user to type in all fields', async () => {
     const user = userEvent.setup();
-    render(<ContactForm />);
+    renderForm();
 
     const nameInput = screen.getByLabelText(/nombre/i);
     const emailInput = screen.getByLabelText(/correo electrónico/i);
@@ -65,12 +73,12 @@ describe('ContactForm', () => {
 
   it('should show validation errors on blur', async () => {
     const user = userEvent.setup();
-    render(<ContactForm />);
+    renderForm();
 
     const emailInput = screen.getByLabelText(/correo electrónico/i);
 
     await user.click(emailInput);
-    await user.tab(); // Blur the field
+    await user.tab();
 
     await waitFor(() => {
       expect(screen.getByText(/correo inválido/i)).toBeInTheDocument();
@@ -79,20 +87,18 @@ describe('ContactForm', () => {
 
   it('should not submit when form is invalid', async () => {
     const user = userEvent.setup();
-    render(<ContactForm />);
+    renderForm();
 
     const submitButton = screen.getByRole('button', { name: /enviar mensaje/i });
 
-    // Button should be disabled when form is empty/invalid
     expect(submitButton).toBeDisabled();
 
-    // Even if we try to click it, fetch should not be called
     await user.click(submitButton);
     expect(global.fetch).not.toHaveBeenCalled();
   });
 
   it('should disable submit button when form is invalid', () => {
-    render(<ContactForm />);
+    renderForm();
 
     const submitButton = screen.getByRole('button', { name: /enviar mensaje/i });
     expect(submitButton).toBeDisabled();
@@ -100,7 +106,7 @@ describe('ContactForm', () => {
 
   it('should enable submit button when form is valid', async () => {
     const user = userEvent.setup();
-    render(<ContactForm />);
+    renderForm();
 
     await user.type(screen.getByLabelText(/nombre/i), 'John Doe');
     await user.type(screen.getByLabelText(/correo electrónico/i), 'john@example.com');
@@ -121,7 +127,7 @@ describe('ContactForm', () => {
       json: async () => ({ success: true }),
     });
 
-    render(<ContactForm />);
+    renderForm();
 
     await user.type(screen.getByLabelText(/nombre/i), 'John Doe');
     await user.type(screen.getByLabelText(/correo electrónico/i), 'john@example.com');
@@ -145,7 +151,7 @@ describe('ContactForm', () => {
       json: async () => ({ success: true }),
     });
 
-    render(<ContactForm />);
+    renderForm();
 
     const nameInput = screen.getByLabelText(/nombre/i);
     const emailInput = screen.getByLabelText(/correo electrónico/i);
@@ -170,7 +176,7 @@ describe('ContactForm', () => {
 
   it('should silently reject spam when honeypot is filled', async () => {
     const user = userEvent.setup();
-    render(<ContactForm />);
+    renderForm();
 
     const honeypotField = screen.getByLabelText(/website/i);
 
@@ -187,7 +193,6 @@ describe('ContactForm', () => {
       expect(screen.getByText(/mensaje enviado/i)).toBeInTheDocument();
     });
 
-    // Should not have called the API
     expect(global.fetch).not.toHaveBeenCalled();
   });
 
@@ -196,7 +201,7 @@ describe('ContactForm', () => {
     const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     vi.mocked(global.fetch).mockRejectedValueOnce(new Error('Network error'));
 
-    render(<ContactForm />);
+    renderForm();
 
     await user.type(screen.getByLabelText(/nombre/i), 'John Doe');
     await user.type(screen.getByLabelText(/correo electrónico/i), 'john@example.com');
@@ -219,7 +224,7 @@ describe('ContactForm', () => {
       () => new Promise((resolve) => setTimeout(() => resolve({ ok: true, json: async () => ({}) }), 100))
     );
 
-    render(<ContactForm />);
+    renderForm();
 
     await user.type(screen.getByLabelText(/nombre/i), 'John Doe');
     await user.type(screen.getByLabelText(/correo electrónico/i), 'john@example.com');

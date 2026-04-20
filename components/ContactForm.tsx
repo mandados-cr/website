@@ -1,9 +1,11 @@
 'use client';
+import { useTranslations } from 'next-intl';
 import useContactForm from '@/lib/hooks/useContactForm';
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 
 export default function ContactForm() {
+  const t = useTranslations('contact');
   const {
     name,
     email,
@@ -25,11 +27,10 @@ export default function ContactForm() {
 
   return (
     <div className="bg-white p-6 rounded-2xl shadow border">
-      <h4 className="text-xl font-bold font-display">Contacto</h4>
-      <p className="text-gray-600 mt-1 font-body">Escribinos para solicitar un servicio o cotización personalizada.</p>
+      <h4 className="text-xl font-bold font-display">{t('title')}</h4>
+      <p className="text-gray-600 mt-1 font-body">{t('subtitle')}</p>
 
       <form onSubmit={handleSubmit} className="mt-4 space-y-3" noValidate>
-        {/* Honeypot field - hidden from users, catches bots */}
         <div className="hidden" aria-hidden="true">
           <label htmlFor="website">Website</label>
           <input
@@ -43,7 +44,7 @@ export default function ContactForm() {
           />
         </div>
         <div>
-          <label htmlFor="contact-name" className="text-sm font-body">Nombre</label>
+          <label htmlFor="contact-name" className="text-sm font-body">{t('fields.name')}</label>
           <input
             id="contact-name"
             value={name}
@@ -57,7 +58,7 @@ export default function ContactForm() {
           {getDisplayedError('name') && <div id="contact-name-error" className="text-sm text-red-600 mt-1">{getDisplayedError('name')}</div>}
         </div>
         <div>
-          <label htmlFor="contact-email" className="text-sm font-body">Correo electrónico</label>
+          <label htmlFor="contact-email" className="text-sm font-body">{t('fields.email')}</label>
           <input
             id="contact-email"
             type="email"
@@ -72,7 +73,7 @@ export default function ContactForm() {
           {getDisplayedError('email') && <div id="contact-email-error" className="text-sm text-red-600 mt-1">{getDisplayedError('email')}</div>}
         </div>
         <div>
-          <label htmlFor="contact-phone" className="text-sm font-body">Teléfono</label>
+          <label htmlFor="contact-phone" className="text-sm font-body">{t('fields.phone')}</label>
           <PhoneInput
             id="contact-phone"
             international
@@ -87,7 +88,7 @@ export default function ContactForm() {
           {getDisplayedError('phone') && <div id="contact-phone-error" className="text-sm text-red-600 mt-1">{getDisplayedError('phone')}</div>}
         </div>
         <div>
-          <label htmlFor="contact-message" className="text-sm font-body">Mensaje</label>
+          <label htmlFor="contact-message" className="text-sm font-body">{t('fields.message')}</label>
           <textarea
             id="contact-message"
             value={message}
@@ -108,13 +109,11 @@ export default function ContactForm() {
             disabled={status === 'loading' || !isValid}
             aria-busy={status === 'loading'}
             className={`px-5 py-3 rounded-2xl text-white font-rounded font-semibold ${status === 'loading' || !isValid ? 'bg-primary/60 cursor-not-allowed' : 'bg-primary'}`}>
-            {status === 'loading' ? 'Enviando...' : 'Enviar mensaje'}
+            {status === 'loading' ? t('submitLoading') : t('submit')}
           </button>
 
-          <a href="https://wa.me/50688051452" className="px-4 py-3 rounded-2xl border border-secondary/30 text-secondary hover:bg-secondary/10 font-body">WhatsApp</a>
+          <a href="https://wa.me/50688051452" className="px-4 py-3 rounded-2xl border border-secondary/30 text-secondary hover:bg-secondary/10 font-body">{t('whatsapp')}</a>
         </div>
-
-        {/* No global summary: errors are shown per-field only (onBlur or after submit) */}
 
         <div aria-live="polite" role="status" className="min-h-[1.25rem]">
           {statusMessage && (

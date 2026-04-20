@@ -1,11 +1,29 @@
+import Image from "next/image";
+import { setRequestLocale } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import Pricing from "@/components/Pricing";
 import ContactForm from "@/components/ContactForm";
-import Image from "next/image";
+import { routing } from "@/i18n/routing";
 
-export default function Page() {
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function Page({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  return <PageContent />;
+}
+
+function PageContent() {
+  const t = useTranslations("footer");
   return (
     <>
       <Navbar />
@@ -30,9 +48,16 @@ export default function Page() {
       <footer className="border-t border-graphite/10 py-8 text-center text-sm text-gray-600">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <Image src="/logos/horizontal-with-tagline.png" alt="Mandados" width={190} height={46} style={{width: "285px", height: "69px"}} loading="lazy"/>
+            <Image
+              src="/logos/horizontal-with-tagline.png"
+              alt={t("logoAlt")}
+              width={190}
+              height={46}
+              style={{ width: "285px", height: "69px" }}
+              loading="lazy"
+            />
           </div>
-          <div>© {new Date().getFullYear()} Mandados — Todos los derechos reservados</div>
+          <div>© {new Date().getFullYear()} Mandados — {t("rights")}</div>
         </div>
       </footer>
     </>

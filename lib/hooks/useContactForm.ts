@@ -1,5 +1,6 @@
 'use client';
 import { useState, useRef, useMemo, FormEvent } from 'react';
+import { useTranslations } from 'next-intl';
 import { contactSchema } from '@/lib/schemas/contact';
 
 export type ContactHook = {
@@ -24,20 +25,25 @@ export type ContactHook = {
 };
 
 type ApiValidationError = { error: 'validation'; fieldErrors: Record<string, string> };
-type ApiMessage = { message?: string };
 
 function isValidationError(obj: unknown): obj is ApiValidationError {
   if (!obj || typeof obj !== 'object') return false;
   const o = obj as Record<string, unknown>;
   return o['error'] === 'validation' && typeof o['fieldErrors'] === 'object' && o['fieldErrors'] !== null;
 }
-function hasMessage(obj: unknown): obj is ApiMessage {
-  if (!obj || typeof obj !== 'object') return false;
-  const o = obj as Record<string, unknown>;
-  return 'message' in o;
-}
 
 export default function useContactForm(): ContactHook {
+  const tContact = useTranslations('contact');
+  const tErrors = useTranslations('contact.errors');
+
+  function translateError(key: string): string {
+    try {
+      return tErrors(key);
+    } catch {
+      return key;
+    }
+  }
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -50,7 +56,6 @@ export default function useContactForm(): ContactHook {
   const [attemptedSubmit, setAttemptedSubmit] = useState(false);
   const timeoutRef = useRef<number | null>(null);
 
-  // Compute client-side validation once per render
   const clientValidation = useMemo(() => {
     const trimmed = { name: name.trim(), email: email.trim(), phone: phone.trim(), message: message.trim() };
     const res = contactSchema.safeParse(trimmed);
@@ -58,9 +63,10 @@ export default function useContactForm(): ContactHook {
     const fieldErrors: Record<string, string> = {};
     for (const issue of res.error.issues) {
       const key = issue.path[0];
-      if (typeof key === 'string') fieldErrors[key] = issue.message;
+      if (typeof key === 'string') fieldErrors[key] = translateError(issue.message);
     }
     return { valid: false, fieldErrors };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name, email, phone, message]);
 
   const isValid = clientValidation.valid;
@@ -74,25 +80,11 @@ export default function useContactForm(): ContactHook {
     });
   }
 
-  function onNameChange(v: string) {
-    setName(v);
-    clearFieldError('name');
-  }
-  function onEmailChange(v: string) {
-    setEmail(v);
-    clearFieldError('email');
-  }
-  function onPhoneChange(v: string | undefined) {
-    setPhone(v || '');
-    clearFieldError('phone');
-  }
-  function onMessageChange(v: string) {
-    setMessage(v);
-    clearFieldError('message');
-  }
-  function onHoneypotChange(v: string) {
-    setHoneypot(v);
-  }
+  function onNameChange(v: string) { setName(v); clearFieldError('name'); }
+  function onEmailChange(v: string) { setEmail(v); clearFieldError('email'); }
+  function onPhoneChange(v: string | undefined) { setPhone(v || ''); clearFieldError('phone'); }
+  function onMessageChange(v: string) { setMessage(v); clearFieldError('message'); }
+  function onHoneypotChange(v: string) { setHoneypot(v); }
 
   function mapClientValidation() {
     if (!clientValidation.valid) {
@@ -124,16 +116,15 @@ export default function useContactForm(): ContactHook {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
     setAttemptedSubmit(true);
 
-    // Honeypot check - if filled, likely spam
     if (honeypot.trim() !== '') {
       setStatus('success');
-      setStatusMessage('Mensaje enviado. Te responderemos pronto.');
-      return; // Silently reject spam
+      setStatusMessage(tContact('success'));
+      return;
     }
 
     if (!mapClientValidation()) {
       setStatus('error');
-      setStatusMessage('Corrige los errores en el formulario.');
+      setStatusMessage(tContact('fixErrors'));
       return;
     }
 
@@ -152,15 +143,9 @@ export default function useContactForm(): ContactHook {
 
       if (res.ok) {
         setStatus('success');
-        setStatusMessage('Mensaje enviado. Te responderemos pronto.');
-        setName('');
-        setEmail('');
-        setPhone('');
-        setMessage('');
-        setHoneypot('');
-        setErrors({});
-        setAttemptedSubmit(false);
-        setTouched({});
+        setStatusMessage(tContact('success'));
+        setName(''); setEmail(''); setPhone(''); setMessage(''); setHoneypot('');
+        setErrors({}); setAttemptedSubmit(false); setTouched({});
 
         if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
         timeoutRef.current = window.setTimeout(() => {
@@ -172,29 +157,27 @@ export default function useContactForm(): ContactHook {
       }
 
       if (isValidationError(json)) {
-        setErrors(json.fieldErrors);
+        const translated: Record<string, string> = {};
+        for (const [field, key] of Object.entries(json.fieldErrors)) {
+          translated[field] = translateError(key);
+        }
+        setErrors(translated);
         setStatus('error');
-        setStatusMessage('Corrige los errores en el formulario.');
+        setStatusMessage(tContact('fixErrors'));
         return;
       }
 
-      let serverMsg = 'Ocurrió un error. Intentá nuevamente.';
-      if (hasMessage(json) && json.message) serverMsg = String(json.message);
       setStatus('error');
-      setStatusMessage(serverMsg);
+      setStatusMessage(tContact('genericError'));
     } catch (error) {
       console.error('Contact form submit error:', error);
       setStatus('error');
-      setStatusMessage('Ocurrió un error de red. Intentá nuevamente.');
+      setStatusMessage(tContact('networkError'));
     }
   }
 
   function reset() {
-    setName('');
-    setEmail('');
-    setPhone('');
-    setMessage('');
-    setHoneypot('');
+    setName(''); setEmail(''); setPhone(''); setMessage(''); setHoneypot('');
     setStatus('idle');
     setStatusMessage(null);
     setErrors({});
@@ -204,23 +187,9 @@ export default function useContactForm(): ContactHook {
   }
 
   return {
-    name,
-    email,
-    phone,
-    message,
-    honeypot,
-    status,
-    statusMessage,
-    errors,
-    isValid,
-    onNameChange,
-    onEmailChange,
-    onPhoneChange,
-    onMessageChange,
-    onHoneypotChange,
-    onFieldBlur,
-    getDisplayedError,
-    handleSubmit,
-    reset,
+    name, email, phone, message, honeypot,
+    status, statusMessage, errors, isValid,
+    onNameChange, onEmailChange, onPhoneChange, onMessageChange, onHoneypotChange,
+    onFieldBlur, getDisplayedError, handleSubmit, reset,
   };
 }

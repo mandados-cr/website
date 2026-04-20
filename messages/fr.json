@@ -1,0 +1,112 @@
+{
+  "metadata": {
+    "title": "Mandados — On s'en occupe",
+    "description": "Mandados : livraisons et courses rapides, fiables et personnalisées au Costa Rica. Commandez dès maintenant, simple et transparent.",
+    "ogDescription": "Mandados : livraisons et courses rapides, fiables et personnalisées au Costa Rica."
+  },
+  "navbar": {
+    "services": "Services",
+    "pricing": "Tarifs",
+    "contact": "Contact",
+    "orderNow": "Commander",
+    "order": "Commander",
+    "logoAlt": "Mandados",
+    "logoAltTagline": "Mandados — On s'en occupe",
+    "languageLabel": "Langue"
+  },
+  "hero": {
+    "badge": "Nouveau • Service express",
+    "title": "Livraisons et courses ultra-rapides partout au Costa Rica",
+    "description": "Mandados prend en charge vos achats, livraisons et démarches avec un personnel de confiance et un suivi personnalisé. Commandez et recevez des mises à jour claires à chaque étape.",
+    "orderNow": "Commander",
+    "viewPricing": "Voir les tarifs",
+    "cardTitle": "Commande : Courses express",
+    "cardSubtitle": "Retrait : Supermarché La Central • Livraison : Bureau à Escazú",
+    "cardEtaLabel": "Temps estimé",
+    "cardEtaValue": "45 min",
+    "imageAlt": "Mandados"
+  },
+  "services": {
+    "title": "Services",
+    "subtitle": "Des solutions sur mesure pour les particuliers, les entreprises et les événements. Rapide, fiable et suivi de bout en bout.",
+    "items": {
+      "shopping": {
+        "title": "Courses",
+        "bullets": [
+          "Supermarchés et boutiques",
+          "Retrait et livraison à domicile",
+          "Ticket de caisse et gestion de la monnaie"
+        ]
+      },
+      "errands": {
+        "title": "Démarches",
+        "bullets": [
+          "Gestion de documents",
+          "Paiements et retraits",
+          "Accompagnement entreprises et hôtels"
+        ]
+      },
+      "deliveries": {
+        "title": "Livraisons",
+        "bullets": [
+          "Coursier local",
+          "Colis et événements",
+          "Coordination de volumes moyens"
+        ]
+      }
+    }
+  },
+  "pricing": {
+    "title": "Tarifs simples et transparents",
+    "subtitle": "Des prix clairs selon la distance et la complexité. Sans surprise.",
+    "mostPopular": "Le plus populaire",
+    "plans": {
+      "errands": {
+        "title": "Courses et livraisons",
+        "price": "₡1 500 — ₡12 500",
+        "note": "Varie selon la distance et la complexité."
+      },
+      "daily": {
+        "title": "Services à la journée",
+        "price": "₡15 000 — ₡35 000 / jour",
+        "note": "Pour les clients qui ont besoin de personnel dédié."
+      },
+      "shoppingBilling": {
+        "title": "Courses et facturation",
+        "price": "Prix selon la distance",
+        "note": "Si Mandados réalise les achats : facture hebdomadaire (vendredi), 2 % sur le montant des achats + TVA 13 % sur la commission."
+      }
+    },
+    "billingNote": "<strong>Facturation :</strong> crédit hebdomadaire avec facture chaque vendredi. <strong>Paiement :</strong> virement bancaire."
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Écrivez-nous pour demander un service ou un devis personnalisé.",
+    "fields": {
+      "name": "Nom",
+      "email": "E-mail",
+      "phone": "Téléphone",
+      "message": "Message"
+    },
+    "submit": "Envoyer le message",
+    "submitLoading": "Envoi...",
+    "whatsapp": "WhatsApp",
+    "success": "Message envoyé. Nous vous répondrons bientôt.",
+    "fixErrors": "Veuillez corriger les erreurs du formulaire.",
+    "genericError": "Une erreur est survenue. Veuillez réessayer.",
+    "networkError": "Erreur réseau. Veuillez réessayer.",
+    "errors": {
+      "name_required": "Le nom est requis",
+      "name_too_long": "Nom trop long",
+      "email_invalid": "E-mail invalide",
+      "phone_required": "Le téléphone est requis",
+      "phone_invalid": "Numéro de téléphone invalide",
+      "message_required": "Message requis",
+      "message_too_long": "Message trop long"
+    }
+  },
+  "footer": {
+    "rights": "Tous droits réservés",
+    "logoAlt": "Mandados"
+  }
+}

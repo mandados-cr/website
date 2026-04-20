@@ -111,8 +111,7 @@ export default function ContactForm() {
             {status === 'loading' ? 'Enviando...' : 'Enviar mensaje'}
           </button>
 
-          <a href="https://wa.me/50687634630" className="px-4 py-3 rounded-2xl border border-secondary/30 text-secondary hover:bg-secondary/10 font-body">WhatsApp</a>
-          <a href="tel:+50687634630" className="px-4 py-3 rounded-2xl border border-secondary/30 text-secondary hover:bg-secondary/10 font-body">Llamar</a>
+          <a href="https://wa.me/50688051452" className="px-4 py-3 rounded-2xl border border-secondary/30 text-secondary hover:bg-secondary/10 font-body">WhatsApp</a>
         </div>
 
         {/* No global summary: errors are shown per-field only (onBlur or after submit) */}

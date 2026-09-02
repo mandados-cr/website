@@ -5,7 +5,17 @@ import ContactForm from '../ContactForm';
 import { IntlWrapper } from '@/lib/testing/intlWrapper';
 
 vi.mock('react-phone-number-input', () => ({
-  default: function PhoneInput({ value, onChange, onBlur, id }: any) {
+  default: function PhoneInput({
+    value,
+    onChange,
+    onBlur,
+    id,
+  }: {
+    value?: string;
+    onChange: (value: string | undefined) => void;
+    onBlur?: () => void;
+    id?: string;
+  }) {
     return (
       <input
         id={id}

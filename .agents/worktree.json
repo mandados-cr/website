@@ -1,7 +1,10 @@
 {
-  "envFiles": [".env", ".env.local"],
+  "envFiles": [
+    ".env",
+    ".env.local"
+  ],
   "install": "npm ci",
-  "gate": "npm run test",
+  "gate": "npm run lint && npm run build && npm run test",
   "scopedCheck": "npm run lint",
   "sharedResources": [],
   "frameworkSkills": [
@@ -14,5 +17,5 @@
       "when": "React component/hook work under components/ and lib/hooks/"
     }
   ],
-  "briefConventions": "This repo has no CLAUDE.md and no docs/strict-rules.md — the workspace-level ones apply. It is the public marketing site and is NOT part of the api type contract: there is no types/generated.d.ts here and no `gen:enums`. i18n is next-intl with message catalogues in messages/ and the request config in i18n/request.ts — not the api-served i18next namespaces the app repos use. There is no formatter in this repo (no prettier dependency and no prettier config), so there is no `format` step; match surrounding style by hand."
+  "briefConventions": "This repo has no CLAUDE.md and no docs/strict-rules.md — the workspace-level ones apply. It is the public marketing site and is NOT part of the api type contract: there is no types/generated.d.ts here and no `gen:enums`. i18n is next-intl with message catalogues in messages/ and the request config in i18n/request.ts — not the api-served i18next namespaces the app repos use. There is no formatter in this repo (no prettier dependency and no prettier config), so there is no `format` step; match surrounding style by hand. There is no `typecheck` script in this repo: `next build` is what typechecks it, which is why the gate runs the build. The gate is deliberately wider than the scoped check — `npm run test` alone (the previous gate) ran neither lint nor any typecheck, so a lint or type regression could reach release/0.1.0 with every declared check green."
 }

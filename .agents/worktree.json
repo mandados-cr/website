@@ -1,6 +1,18 @@
 {
+  "envFiles": [".env", ".env.local"],
   "install": "npm ci",
   "gate": "npm run test",
   "scopedCheck": "npm run lint",
-  "envFiles": []
+  "sharedResources": [],
+  "frameworkSkills": [
+    {
+      "skill": "vercel:nextjs",
+      "when": "Next.js 16 App Router work — routing, layouts, Server Components, the next-intl locale middleware, data fetching"
+    },
+    {
+      "skill": "vercel:react-best-practices",
+      "when": "React component/hook work under components/ and lib/hooks/"
+    }
+  ],
+  "briefConventions": "This repo has no CLAUDE.md and no docs/strict-rules.md — the workspace-level ones apply. It is the public marketing site and is NOT part of the api type contract: there is no types/generated.d.ts here and no `gen:enums`. i18n is next-intl with message catalogues in messages/ and the request config in i18n/request.ts — not the api-served i18next namespaces the app repos use. There is no formatter in this repo (no prettier dependency and no prettier config), so there is no `format` step; match surrounding style by hand."
 }

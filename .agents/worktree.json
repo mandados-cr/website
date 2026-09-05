@@ -1,8 +1,5 @@
 {
-  "envFiles": [
-    ".env",
-    ".env.local"
-  ],
+  "envFiles": [".env", ".env.local"],
   "install": "npm ci",
   "gate": "npm run lint && npm run build && npm run test",
   "scopedCheck": "npm run lint",

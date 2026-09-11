@@ -3,6 +3,7 @@
   "install": "npm ci",
   "gate": "npm run lint && npm run build && npm run test",
   "scopedCheck": "npm run lint",
+  "upstreamFindings": true,
   "sharedResources": [],
   "frameworkSkills": [
     {
